@@ -7,14 +7,14 @@ use std::fmt;
 
 /// Errors produced by this component. Fail-fast: errors are returned, not panicked.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum Sigmaos_archivetoolsError {
+pub enum ArchivetoolsError {
     /// The requested operation is not valid in the current state.
     InvalidState,
     /// Input failed validation.
     InvalidInput(String),
 }
 
-impl fmt::Display for Sigmaos_archivetoolsError {
+impl fmt::Display for ArchivetoolsError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::InvalidState => write!(f, "invalid state"),
@@ -23,20 +23,20 @@ impl fmt::Display for Sigmaos_archivetoolsError {
     }
 }
 
-impl std::error::Error for Sigmaos_archivetoolsError {}
+impl std::error::Error for ArchivetoolsError {}
 
 /// Core component type. Holds configuration; performs no I/O by default.
 #[derive(Debug, Clone, Default)]
-pub struct Sigmaos_archivetools {
+pub struct Archivetools {
     name: String,
 }
 
-impl Sigmaos_archivetools {
+impl Archivetools {
     /// Create a new component instance. Fails fast on empty names.
-    pub fn new(name: impl Into<String>) -> Result<Self, Sigmaos_archivetoolsError> {
+    pub fn new(name: impl Into<String>) -> Result<Self, ArchivetoolsError> {
         let name = name.into();
         if name.trim().is_empty() {
-            return Err(Sigmaos_archivetoolsError::InvalidInput("name must not be empty".into()));
+            return Err(ArchivetoolsError::InvalidInput("name must not be empty".into()));
         }
         Ok(Self { name })
     }
@@ -47,9 +47,9 @@ impl Sigmaos_archivetools {
     }
 
     /// Perform the component's primary action. Returns a deterministic result.
-    pub fn run(&self) -> Result<String, Sigmaos_archivetoolsError> {
+    pub fn run(&self) -> Result<String, ArchivetoolsError> {
         if self.name.is_empty() {
-            return Err(Sigmaos_archivetoolsError::InvalidState);
+            return Err(ArchivetoolsError::InvalidState);
         }
         Ok(format!("{}: ok", self.name))
     }
@@ -62,18 +62,18 @@ mod tests {
     #[test]
     fn new_rejects_empty_name() {
         // Arrange / Act / Assert
-        assert!(matches!(Sigmaos_archivetools::new("  "), Err(Sigmaos_archivetoolsError::InvalidInput(_))));
+        assert!(matches!(Archivetools::new("  "), Err(ArchivetoolsError::InvalidInput(_))));
     }
 
     #[test]
     fn run_returns_deterministic_result() {
-        let c = Sigmaos_archivetools::new("test").unwrap();
+        let c = Archivetools::new("test").unwrap();
         assert_eq!(c.run().unwrap(), "test: ok");
     }
 
     #[test]
     fn name_is_accessible() {
-        let c = Sigmaos_archivetools::new("abc").unwrap();
+        let c = Archivetools::new("abc").unwrap();
         assert_eq!(c.name(), "abc");
     }
 }
