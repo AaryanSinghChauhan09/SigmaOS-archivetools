@@ -3,7 +3,7 @@ name = "SigmaOS-archivetools"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "archivetools component"
+description = "SigmaOS archivetools component (Arch Linux inspired)"
 upstream = []
 
 [contract]
