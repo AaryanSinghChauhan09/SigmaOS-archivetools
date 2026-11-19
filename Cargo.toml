@@ -1,8 +1,15 @@
 [package]
-name = "sigmaos-archivetools"
+name = "SigmaOS-archivetools"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
-description = "Package archive maintenance tools — SigmaOS component inspired by Arch Linux infrastructure."
+license = "Apache-2.0"
+description = "SigmaOS archivetools component"
+
+[lib]
+name = "archivetools"
+path = "src/lib.rs"
 
 [dependencies]
+thiserror = "1"
+
+[dev-dependencies]
