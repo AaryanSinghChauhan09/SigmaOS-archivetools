@@ -1,16 +1,16 @@
 [component]
 name = "SigmaOS-archivetools"
 tier = 2
-stability = "scaffold"
+stability = "beta"
 language = "rust"
 description = "SigmaOS archivetools component (Arch Linux inspired)"
-upstream = []
+upstream = ["https://github.com/archlinux/archivetools"]
 
 [contract]
-provides = ["component"]
+provides = ["ala-snapshot-scan", "archive-cleanup-plan", "pkg-filename-parse"]
 depends_on = []
 
 [maturity]
 status = "Implemented"
-test_evidence = "Compiles and passes AAA unit tests"
+test_evidence = "cargo test: 8 tests pass (snapshot scan, cleanup plan, version keys)"
 next_milestone = "Hardware and runtime integration"
